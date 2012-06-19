@@ -147,34 +147,100 @@ typedef enum {
 	} _scrollViewFlags;
 }
 
-@property (nonatomic) CGPoint contentOffset;
-@property (nonatomic) CGSize contentSize;
-@property (nonatomic) BOOL bounces;
-@property (nonatomic) BOOL alwaysBounceVertical;
-@property (nonatomic) BOOL alwaysBounceHorizontal;
-@property (nonatomic) CGSize resizeKnobSize;
-@property (nonatomic) TUIEdgeInsets contentInset;
-@property (nonatomic, unsafe_unretained) id<TUIScrollViewDelegate> delegate;
-@property (nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
-@property (nonatomic) TUIScrollViewIndicatorVisibility horizontalScrollIndicatorVisibility;
-@property (nonatomic) TUIScrollViewIndicatorVisibility verticalScrollIndicatorVisibility;
-@property (readonly, nonatomic) BOOL verticalScrollIndicatorShowing;
-@property (readonly, nonatomic) BOOL horizontalScrollIndicatorShowing;
-@property (nonatomic) TUIScrollViewIndicatorStyle scrollIndicatorStyle;
-@property (nonatomic) float decelerationRate;
+/** @name Managing the Display of Content */
 
+
+/**
+ * Sets the content offset of the scroll view.
+ * If animated is YES, the content offset
+ * will be animated automatically at a frame rate of 60FPS. See decelerationRate for information
+ * about affecting the speed of the animation.
+ *
+ * @param animated Whether or not the content offset should be animated.
+ */
 - (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
+
+/**
+ * Gets or sets the content offset for the scroll view.
+ */
+@property (nonatomic) CGPoint contentOffset;
+
+/**
+ * Gets or sets the content size for the scroll view.
+ */
+@property (nonatomic) CGSize contentSize;
+
+/**
+ * Gets or sets the content inset for the scroll view.
+ */
+@property (nonatomic) TUIEdgeInsets contentInset;
+
+/**
+ * Gets the visible rectangle of the content in the scroll view.
+ */
+@property (nonatomic, readonly) CGRect visibleRect;
+
+/** @name Managing Scrolling */
+
+/**
+ * Gets or sets whether or not scrolling is enabled in the scroll view.
+ */
+@property (nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
+
 - (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated;
 - (void)scrollToTopAnimated:(BOOL)animated;
 - (void)scrollToBottomAnimated:(BOOL)animated;
 
+/**
+ * Gets or sets whether the scroll view bounces past the edge of content and back again
+ * 
+ * If the value of this property is YES, the scroll view bounces when it encounters a boundary of the content. Bouncing visually indicates
+ * that scrolling has reached an edge of the content. If the value is NO, scrolling stops immediately at the content boundary without bouncing.
+ * The default value varies based on the current AppKit version, user preferences, and other factors.
+ */
+@property (nonatomic) BOOL bounces;
+
+
+/**
+ * Gets or sets whether the content always bounces vertically
+ * 
+ * If this property is set to YES and bounces is YES, vertical dragging is allowed even if the content is smaller than the bounds of the scroll view. The default value is NO.
+ */
+@property (nonatomic) BOOL alwaysBounceVertical;
+
+/**
+ * Gets or sets whether the content always bounces horizontally
+ * 
+ * If this property is set to YES and bounces is YES, horizontal dragging is allowed even if the content is smaller than the bounds of the scroll view. The default value is NO.
+ */
+@property (nonatomic) BOOL alwaysBounceHorizontal;
+
+/**
+ * Begin scrolling continuously for a drag
+ * 
+ * Content is continuously scrolled in the direction of the drag until the end
+ * of the content is reached or the operation is cancelled via
+ * endContinuousScrollAnimated:.
+ * 
+ * @param dragLocation the drag location
+ * @param animated animate the scroll or not (this is currently ignored and the scroll is always animated)
+ */
 - (void)beginContinuousScrollForDragAtPoint:(CGPoint)dragLocation animated:(BOOL)animated;
+
+/**
+ * Stop scrolling continuously for a drag
+ * 
+ * This method is the counterpart to beginContinuousScrollForDragAtPoint:animated:
+ * 
+ * @param animated animate the scroll or not (this is currently ignored and the scroll is always animated)
+ */
 - (void)endContinuousScrollAnimated:(BOOL)animated;
 
-@property (nonatomic, readonly) CGRect visibleRect;
-@property (nonatomic, readonly) TUIEdgeInsets scrollIndicatorInsets;
-
-- (void)flashScrollIndicators;
+/**
+ * Gets or sets the rate at which the rate at which the scroll view decelerates after being
+ * scrolled.
+ */
+@property (nonatomic) float decelerationRate;
 
 - (BOOL)isScrollingToTop;
 
@@ -183,6 +249,68 @@ typedef enum {
 
 @property (nonatomic, readonly, getter=isDragging) BOOL dragging;
 @property (nonatomic, readonly, getter=isDecelerating) BOOL decelerating;
+
+/** @name Managing the Scroll Indicator */
+
+/**
+ * Gets or sets the horizontal scroll indicator visibility.
+ *
+ * The scroll indicator visibiliy determines when scroll indicators are displayed.
+ * Note that scroll indicators are never displayed if the content in the scroll view
+ * is not large enough to require them.
+ */
+@property (nonatomic) TUIScrollViewIndicatorVisibility horizontalScrollIndicatorVisibility;
+
+/**
+ * Gets or sets the vertical scroll indicator visibility.
+ *
+ * The scroll indicator visibiliy determines when scroll indicators are displayed.
+ * Note that scroll indicators are never displayed if the content in the scroll view
+ * is not large enough to require them.
+ */
+@property (nonatomic) TUIScrollViewIndicatorVisibility verticalScrollIndicatorVisibility;
+
+/**
+ * Gets whether or not the vertical scroll indicator is currently showing.
+ */
+@property (readonly, nonatomic) BOOL verticalScrollIndicatorShowing;
+
+/**
+ * Gets whether or not the horizontal scroll indicator is currently showing.
+ */
+@property (readonly, nonatomic) BOOL horizontalScrollIndicatorShowing;
+
+/**
+ * Gets or sets the scroll indicator style.
+ * @see TUIScrollViewIndicatorStyle
+ */
+@property (nonatomic) TUIScrollViewIndicatorStyle scrollIndicatorStyle;
+
+/**
+ * Gets the insets for currently visible scroll indicators.
+ * 
+ * The insets describe the margins needed for content not to overlap the any
+ * scroll indicators which are currently visible.  You can apply these insets
+ * to #visibleRect to obtain a content frame what avoids the scroll indicators.
+ */
+@property (nonatomic, readonly) TUIEdgeInsets scrollIndicatorInsets;
+
+- (void)flashScrollIndicators;
+
+/** @name Managing the Delegate */
+
+/**
+ * Gets or sets the delegate for the scroll view.
+ * @see TUIScrollViewDelegate
+ */
+@property (nonatomic, unsafe_unretained) id<TUIScrollViewDelegate> delegate;
+
+/** @name Misc */
+
+/**
+ * Gets or sets the size of the knob used for resizing the scroll view. (?)
+ */
+@property (nonatomic) CGSize resizeKnobSize;
 
 @end
 

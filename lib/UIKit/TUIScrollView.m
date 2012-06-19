@@ -128,70 +128,26 @@ enum {
 	_horizontalScrollKnob.scrollIndicatorStyle = s;
 }
 
-/**
- * @brief Obtain the vertical scroll indiciator visibility
- * 
- * The scroll indicator visibiliy determines when scroll indicators are displayed.
- * Note that scroll indicators are never displayed if the content in the scroll view
- * is not large enough to require them.
- * 
- * @return vertical scroll indicator visibility
- */
 -(TUIScrollViewIndicatorVisibility)verticalScrollIndicatorVisibility {
   return _scrollViewFlags.verticalScrollIndicatorVisibility;
 }
 
-/**
- * @brief Set the vertical scroll indiciator visibility
- * 
- * The scroll indicator visibiliy determines when scroll indicators are displayed.
- * Note that scroll indicators are never displayed if the content in the scroll view
- * is not large enough to require them.
- * 
- * @param visibility vertical scroll indicator visibility
- */
 -(void)setVerticalScrollIndicatorVisibility:(TUIScrollViewIndicatorVisibility)visibility {
    _scrollViewFlags.verticalScrollIndicatorVisibility = visibility;
 }
 
-/**
- * @brief Obtain the horizontal scroll indiciator visibility
- * 
- * The scroll indicator visibiliy determines when scroll indicators are displayed.
- * Note that scroll indicators are never displayed if the content in the scroll view
- * is not large enough to require them.
- * 
- * @return horizontal scroll indicator visibility
- */
 -(TUIScrollViewIndicatorVisibility)horizontalScrollIndicatorVisibility {
   return _scrollViewFlags.horizontalScrollIndicatorVisibility;
 }
 
-/**
- * @brief Set the horizontal scroll indiciator visibility
- * 
- * The scroll indicator visibiliy determines when scroll indicators are displayed.
- * Note that scroll indicators are never displayed if the content in the scroll view
- * is not large enough to require them.
- * 
- * @param visibility horizontal scroll indicator visibility
- */
 -(void)setHorizontalScrollIndicatorVisibility:(TUIScrollViewIndicatorVisibility)visibility {
    _scrollViewFlags.horizontalScrollIndicatorVisibility = visibility;
 }
 
-/**
- * @brief Determine if the vertical scroll indicator is currently showing
- * @return showing or not
- */
 -(BOOL)verticalScrollIndicatorShowing {
   return _scrollViewFlags.verticalScrollIndicatorShowing;
 }
 
-/**
- * @brief Determine if the horizontal scroll indicator is currently showing
- * @return showing or not
- */
 -(BOOL)horizontalScrollIndicatorShowing {
   return _scrollViewFlags.horizontalScrollIndicatorShowing;
 }
@@ -233,15 +189,6 @@ enum {
 	return b;
 }
 
-/**
- * @brief Obtain the insets for currently visible scroll indicators
- * 
- * The insets describe the margins needed for content not to overlap the any
- * scroll indicators which are currently visible.  You can apply these insets
- * to #visibleRect to obtain a content frame what avoids the scroll indicators.
- * 
- * @return scroll indicator insets
- */
 -(TUIEdgeInsets)scrollIndicatorInsets {
   return TUIEdgeInsetsMake(0, 0, (_scrollViewFlags.horizontalScrollIndicatorShowing) ? _horizontalScrollKnob.frame.size.height : 0, (_scrollViewFlags.verticalScrollIndicatorShowing) ? _verticalScrollKnob.frame.size.width : 0);
 }
@@ -565,72 +512,26 @@ static CGPoint PointLerp(CGPoint a, CGPoint b, CGFloat t)
 	return -self.contentSize.height + visible.size.height;
 }
 
-/**
- * @brief Whether the scroll view bounces past the edge of content and back again
- * 
- * If the value of this property is YES, the scroll view bounces when it encounters a boundary of the content. Bouncing visually indicates
- * that scrolling has reached an edge of the content. If the value is NO, scrolling stops immediately at the content boundary without bouncing.
- * The default value varies based on the current AppKit version, user preferences, and other factors.
- * 
- * @return bounces or not
- */
 -(BOOL)bounces {
   return _scrollViewFlags.bounceEnabled;
 }
 
-/**
- * @brief Whether the scroll view bounces past the edge of content and back again
- * 
- * If the value of this property is YES, the scroll view bounces when it encounters a boundary of the content. Bouncing visually indicates
- * that scrolling has reached an edge of the content. If the value is NO, scrolling stops immediately at the content boundary without bouncing.
- * The default value varies based on the current AppKit version, user preferences, and other factors.
- * 
- * @return bounces or not
- */
 -(void)setBounces:(BOOL)bounces {
   _scrollViewFlags.bounceEnabled = bounces;
 }
 
-/**
- * @brief Always bounce content vertically
- * 
- * If this property is set to YES and bounces is YES, vertical dragging is allowed even if the content is smaller than the bounds of the scroll view. The default value is NO.
- * 
- * @return always bounce vertically or not
- */
 -(BOOL)alwaysBounceVertical {
   return _scrollViewFlags.alwaysBounceVertical;
 }
 
-/**
- * @brief Always bounce content vertically
- * 
- * If this property is set to YES and bounces is YES, vertical dragging is allowed even if the content is smaller than the bounds of the scroll view. The default value is NO.
- * 
- * @param always always bounce vertically or not
- */
 -(void)setAlwaysBounceVertical:(BOOL)always {
   _scrollViewFlags.alwaysBounceVertical = always;
 }
 
-/**
- * @brief Always bounce content horizontally
- * 
- * If this property is set to YES and bounces is YES, horizontal dragging is allowed even if the content is smaller than the bounds of the scroll view. The default value is NO.
- * 
- * @return always bounce vertically or not
- */
 -(BOOL)alwaysBounceHorizontal {
   return _scrollViewFlags.alwaysBounceHorizontal;
 }
 
-/**
- * @brief Always bounce content horizontally
- * 
- * If this property is set to YES and bounces is YES, horizontal dragging is allowed even if the content is smaller than the bounds of the scroll view. The default value is NO.
- * 
- * @param always always bounce vertically or not
- */
 -(void)setAlwaysBounceHorizontal:(BOOL)always {
   _scrollViewFlags.alwaysBounceHorizontal = always;
 }
@@ -657,16 +558,6 @@ static CGPoint PointLerp(CGPoint a, CGPoint b, CGFloat t)
 	}
 }
 
-/**
- * @brief Begin scrolling continuously for a drag
- * 
- * Content is continuously scrolled in the direction of the drag until the end
- * of the content is reached or the operation is cancelled via
- * #endContinuousScrollAnimated:.
- * 
- * @param dragLocation the drag location
- * @param animated animate the scroll or not (this is currently ignored and the scroll is always animated)
- */
 - (void)beginContinuousScrollForDragAtPoint:(CGPoint)dragLocation animated:(BOOL)animated {
   if(dragLocation.y <= TUIScrollViewContinuousScrollDragBoundary || dragLocation.y >= (self.bounds.size.height - TUIScrollViewContinuousScrollDragBoundary)){
     // note the drag offset
@@ -678,13 +569,6 @@ static CGPoint PointLerp(CGPoint a, CGPoint b, CGFloat t)
   }
 }
 
-/**
- * @brief Stop scrolling continuously for a drag
- * 
- * This method is the counterpart to #beginContinuousScrollForDragAtPoint:animated:
- * 
- * @param animated animate the scroll or not (this is currently ignored and the scroll is always animated)
- */
 - (void)endContinuousScrollAnimated:(BOOL)animated {
   if(_scrollViewFlags.animationMode == AnimationModeScrollContinuous){
     [self _stopTimer];

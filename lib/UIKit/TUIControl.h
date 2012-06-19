@@ -57,6 +57,17 @@ typedef NSUInteger TUIControlState;
 
 @property(nonatomic,readonly) TUIControlState state;
 @property(nonatomic,readonly,getter=isTracking) BOOL tracking;
+
+/**
+ * Gets or sets whether or not the control is in a selected state.
+ *
+ * Not all controls have a selected state and the meaning of "selected" is left
+ * to individual control implementation to define.
+ *
+ * @note This is a convenience interface to the #state property.
+ * @see #state
+ */
+
 @property(nonatomic,assign) BOOL selected;
 
 @property (nonatomic, assign) BOOL acceptsFirstMouse;

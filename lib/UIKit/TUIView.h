@@ -73,7 +73,7 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 @protocol TUIViewDelegate;
 
 /**
- Root view class
+ * Root view class
  */
 
 @interface TUIView : TUIResponder
@@ -134,36 +134,38 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 }
 
 /**
- Must be a subclass of CALayer. Default is CALayer. Subclasses may override.
- @returns the class of the layer to be allocated as the view backing layer.
+ * Must be a subclass of CALayer. Default is CALayer. Subclasses may override.
+ * @returns the class of the layer to be allocated as the view backing layer.
  */
 + (Class)layerClass;
 
 @property (nonatomic, unsafe_unretained) id<TUIViewDelegate> viewDelegate;
 
 /**
- Designated initializer
+ * Designated initializer
+ * 
+ * @param frame The frame for the intialized view.
  */
 - (id)initWithFrame:(CGRect)frame;
 
 /**
- Default is YES. if set to NO, user events (touch, keys) are ignored and removed from the event queue.
+ * Default is YES. if set to NO, user events (touch, keys) are ignored and removed from the event queue.
  */
 @property (nonatomic,getter=isUserInteractionEnabled) BOOL userInteractionEnabled;
 
 /**
- Default is 0
+ * Default is 0
  */
 @property (nonatomic) NSInteger tag;
 
 /**
- Will always return a non-nil value. Reciever is the layer's delegate.
- @returns the reciever's backing layer.
+ * Will always return a non-nil value. Reciever is the layer's delegate.
+ * @returns the reciever's backing layer.
  */
 @property (nonatomic,readonly,strong) CALayer *layer;
 
 /**
- Supply a block as an alternative to overriding -layoutSubviews
+ * Supply a block as an alternative to overriding -layoutSubviews
  */
 @property (nonatomic, copy) TUIViewLayout layout;
 
@@ -171,38 +173,38 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 @property (nonatomic, assign) BOOL resizeWindowByDragging;
 
 /**
- If set to NO, will disable subpixel antialiasing for text.
+ * If set to NO, will disable subpixel antialiasing for text.
  */
 @property (nonatomic, assign) BOOL subpixelTextRenderingEnabled; // defaults to YES
 
 /**
- Tooltip will pop up if cursor hovers a view for toolTipDelay seconds
+ * Tooltip will pop up if cursor hovers a view for toolTipDelay seconds
  */
 @property (nonatomic, strong) NSString *toolTip;
 
 /**
- Default is 1.5s
+ * Default is 1.5s
  */
 @property (nonatomic, assign) NSTimeInterval toolTipDelay;
 
 @property (nonatomic, assign) TUIViewContentMode contentMode;
 
 /**
- If YES, drawing will be done in a background queue. If `drawQueue` is nil, it will be performed in the DISPATCH_QUEUE_PRIORITY_DEFAULT global queue. Note that `-viewWillDisplayLayer:` will still be called on the main thread.
- 
- Defaults to NO.
+ * If YES, drawing will be done in a background queue. If `drawQueue` is nil, it will be performed in the DISPATCH_QUEUE_PRIORITY_DEFAULT global queue. Note that `-viewWillDisplayLayer:` will still be called on the main thread.
+ * 
+ * Defaults to NO.
  */
 @property (nonatomic, assign) BOOL drawInBackground;
 
 /**
- The queue in which drawing should be performed. Only used if `drawInBackground` is YES.
- 
- Defaults to nil.
+ * The queue in which drawing should be performed. Only used if `drawInBackground` is YES.
+ * 
+ * Defaults to nil.
  */
 @property (nonatomic, retain) NSOperationQueue *drawQueue;
 
 /**
- Make this view the first responder. Returns NO if it fails.
+ * Make this view the first responder. Returns NO if it fails.
  */
 - (BOOL)makeFirstResponder;
 
@@ -231,28 +233,29 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 @property (nonatomic, assign) CGRect frame;
 
 /**
- Use bounds/center and not frame if non-identity transform. if bounds dimension is odd, center may be have fractional part
- Default bounds is zero origin, frame size. animatable
+ * Use bounds/center and not frame if non-identity transform. if bounds dimension is odd, center may be have fractional part
+ * 
+ * Default bounds is zero origin, frame size. animatable
  */
 @property (nonatomic, assign) CGRect bounds;
 
 /**
- Center is center of frame. animatable
+ * Center is center of frame. animatable
  */
 @property (nonatomic, assign) CGPoint center;
 
 /**
- Default is CGAffineTransformIdentity. animatable
+ * Default is CGAffineTransformIdentity. animatable
  */
 @property (nonatomic, assign) CGAffineTransform transform;
 
 /**
- Recursively calls -pointInside:withEvent:. point is in frame coordinates (event ignored)
+ * Recursively calls -pointInside:withEvent:. point is in frame coordinates (event ignored)
  */
 - (TUIView *)hitTest:(CGPoint)point withEvent:(id)event;
 
 /**
- Default returns YES if point is in bounds (event ignored)
+ * Default returns YES if point is in bounds (event ignored)
  */
 - (BOOL)pointInside:(CGPoint)point withEvent:(id)event;
 
@@ -262,7 +265,7 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 - (CGRect)convertRect:(CGRect)rect fromView:(TUIView *)view;
 
 /**
- Simple resize. default is TUIViewAutoresizingNone
+ * Simple resize. default is TUIViewAutoresizingNone
  */
 @property (nonatomic, assign) TUIViewAutoresizing autoresizingMask;
 
@@ -282,7 +285,7 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 @property (nonatomic, readonly, strong) NSArray *subviews;
 
 /**
- Recursive search, handy for debugging.
+ * Recursive search, handy for debugging.
  */
 @property (nonatomic, readonly) NSInteger deepNumberOfSubviews;
 
@@ -305,17 +308,17 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 - (void)didMoveToWindow;
 
 /**
- Note: returns YES ff view == reciever
+ * Note: returns YES ff view == reciever
  */
 - (BOOL)isDescendantOfView:(TUIView *)view;
 
 /**
- Recursive search, includes reciever.
+ * Recursive search, includes reciever.
  */
 - (TUIView *)viewWithTag:(NSInteger)tag;
 
 /**
- Includes reciever.
+ * Includes reciever.
  */
 - (TUIView *)firstSuperviewOfClass:(Class)c;
 
@@ -323,7 +326,7 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 - (void)layoutIfNeeded;
 
 /**
- Subclasses may override to layout their subviews.  Also see the ^layout property for another mechanism for this.
+ * Subclasses may override to layout their subviews.  Also see the ^layout property for another mechanism for this.
  */
 - (void)layoutSubviews;
 
@@ -332,59 +335,67 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 @interface TUIView (TUIViewRendering)
 
 /**
- Supply a block as an alternative to subclassing and overriding -drawRect:
+ * Supply a block as an alternative to subclassing and overriding -drawRect:
  */
 @property (nonatomic, copy) TUIViewDrawRect drawRect;
 
 /**
- Forces an immediate update of the backing view's layer.contents. May be inside an animation block to cross-fade.
+ * Forces an immediate update of the backing view's layer.contents. May be inside an animation block to cross-fade.
  */
 - (void)redraw; // forces a 'contents' update immediately - will animate contents if called inside an animation block
 
 /**
- Subclasses should override to provide custom drawing.  Don't override unless needed, as overriding with a blank implementation incurs overhead (backing stores are allocated and rendered).
- You may also provide a block-based drawRect override with the .drawRect property.
+ * Subclasses should override to provide custom drawing.  Don't override unless needed, as overriding with a blank implementation incurs overhead (backing stores are allocated and rendered).
+ * You may also provide a block-based drawRect override with the .drawRect property.
+ *
+ * @param rect The rectangle in which to draw.
  */
 - (void)drawRect:(CGRect)rect;
 
 /**
- Marks the view as needing display, will happen before the next run loop cycle
+ * Marks the view as needing display, will happen before the next run loop cycle
  */
 - (void)setNeedsDisplay;
+
+/**
+ * Marks the view as needing display within the given `rect`, will happen before the next run loop cycle.
+ *
+ * @param rect The portion of the view that needs to be displayed.
+ */
 - (void)setNeedsDisplayInRect:(CGRect)rect;
 
 /**
- Recursive -setNeedsDisplay
+ * Recursive -setNeedsDisplay
  */
 - (void)setEverythingNeedsDisplay;
 
 /**
- When YES, content and subviews are clipped to the bounds of the view. Default is NO.
+ * When YES, content and subviews are clipped to the bounds of the view. Default is NO.
  */
 @property (nonatomic) BOOL clipsToBounds;
 
 /**
- default is nil.  Setting this with a color with <1.0 alpha will also set opaque=NO
+ * Default is nil.  Setting this with a color with <1.0 alpha will also set opaque=NO
  */
 @property (nonatomic,copy) TUIColor *backgroundColor;
 
 /**
- animatable. default is 1.0
+ * Animatable. default is 1.0
  */
 @property (nonatomic) CGFloat alpha;
 
 /**
- default is YES. opaque views must fill their entire bounds or the results are undefined. the active CGContext in drawRect: will not have been cleared and may have non-zeroed pixels
+ * Default is YES. opaque views must fill their entire bounds or the results are undefined. the active CGContext in drawRect: will not have been cleared and may have non-zeroed pixels
  */
 @property (nonatomic,getter=isOpaque) BOOL opaque;
 
 /**
- default is NO. doesn't check superviews
+ * Default is NO. doesn't check superviews
  */
 @property (nonatomic,getter=isHidden) BOOL hidden;
 
 /**
- default is YES. if set to NO, the view must fill its entire bounds, otherwise the view may contain graphical garbage.
+ * Default is YES. if set to NO, the view must fill its entire bounds, otherwise the view may contain graphical garbage.
  */
 @property (nonatomic) BOOL clearsContextBeforeDrawing;
 
@@ -393,39 +404,40 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 @interface TUIView (TUIViewAnimation)
 
 /**
- additional context info passed to will start/did stop selectors. begin/commit can be nested
+ * @param animationID The ID of the animation to begin.
+ * @param context Additional context info passed to will start/did stop selectors. begin/commit can be nested.
  */
 + (void)beginAnimations:(NSString *)animationID context:(void *)context;
 
 /**
- starts up any animations when the top level animation is commited
+ * Sarts up any animations when the top level animation is commited.
  */
 + (void)commitAnimations;
 
 // no getters. if called outside animation block, these setters have no effect.
 
 /**
- default = nil
+ * default = nil
  */
 + (void)setAnimationDelegate:(id)delegate;
 
 /**
- default = NULL. -animationWillStart:(NSString *)animationID context:(void *)context
+ * default = NULL. -animationWillStart:(NSString *)animationID context:(void *)context
  */
 + (void)setAnimationWillStartSelector:(SEL)selector;
 
 /**
- default = NULL. -animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+ * default = NULL. -animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
  */
 + (void)setAnimationDidStopSelector:(SEL)selector;
 
 /**
- default = 0.2
+ * default = 0.2
  */
 + (void)setAnimationDuration:(NSTimeInterval)duration;
 
 /**
- default = 0.0
+ * default = 0.0
  */
 + (void)setAnimationDelay:(NSTimeInterval)delay;
 
@@ -443,7 +455,7 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 + (BOOL)areAnimationsEnabled;
 
 /**
- animate the 'contents' property when set, defaults to NO
+ * animate the 'contents' property when set, defaults to NO
  */
 + (void)setAnimateContents:(BOOL)enabled;
 + (BOOL)willAnimateContents;
@@ -452,7 +464,7 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 + (void)animateWithDuration:(NSTimeInterval)duration animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion;
 
 /**
- from receiver and all subviews
+ * from receiver and all subviews
  */
 - (void)removeAllAnimations;
 
@@ -464,7 +476,7 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 @property (nonatomic, readonly) TUINSWindow *nsWindow;
 
 /**
- doesn't take any transforms into effect
+ * doesn't take any transforms into effect
  */
 @property (nonatomic, readonly) NSRect frameInNSView;
 @property (nonatomic, readonly) NSRect frameOnScreen;
@@ -473,7 +485,7 @@ extern CGRect(^TUIViewCenteredLayout)(TUIView*);
 - (CGPoint)localPointForEvent:(NSEvent *)event;
 
 /**
- @returns whether mouse event occured within the bounds of reciever
+ * @returns whether mouse event occured within the bounds of reciever
  */
 - (BOOL)eventInside:(NSEvent *)event;
 

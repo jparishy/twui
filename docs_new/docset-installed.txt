@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/jparishy/Library/Developer/Shared/Documentation/DocSets/com.twitter.TwUI.docset
+Time: 2012-06-19 23:37:25 +0000

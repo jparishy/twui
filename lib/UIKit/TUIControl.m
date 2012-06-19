@@ -64,31 +64,10 @@
 	return actual;
 }
 
-/**
- * @brief Determine if this control is in a selected state
- * 
- * Not all controls have a selected state and the meaning of "selected" is left
- * to individual control implementations to define.
- * 
- * @return selected or not
- * 
- * @note This is a convenience interface to the #state property.
- * @see #state
- */
 -(BOOL)selected {
   return _controlFlags.selected;
 }
 
-/**
- * @brief Specify whether this control is in a selected state
- * 
- * Not all controls have a selected state and the meaning of "selected" is left
- * to individual control implementations to define.
- * 
- * @param selected selected or not
- * 
- * @see #state
- */
 -(void)setSelected:(BOOL)selected {
 	[self _stateWillChange];
 	_controlFlags.selected = selected;

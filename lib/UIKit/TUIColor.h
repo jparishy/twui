@@ -74,7 +74,12 @@
 @property (nonatomic, readonly) CGFloat alphaComponent;
 
 /**
- It is the caller's responsibility to ensure the reciever is an RGBA color. Pass NULL for components you don't care about.
+ * It is the caller's responsibility to ensure the reciever is an RGBA color. Pass NULL for components you don't care about.
+ *
+ * @param r If not NULL, retrieves the red channel of the color.
+ * @param g If not NULL, retrieves the green channel of the color.
+ * @param b If not NULL, retrieves the blue channel of the color.
+ * @param a If not NULL, retrieves the alpha channel of the color.
  */
 - (void)getRed:(CGFloat *)r green:(CGFloat *)g blue:(CGFloat *)b alpha:(CGFloat *)a;
 
@@ -84,7 +89,7 @@
 - (void)getWhite:(CGFloat *)w alpha:(CGFloat *)a;
 
 /**
- Not cached
+ * Not cached
  */
 @property (strong, nonatomic, readonly) NSColor *nsColor;
 
